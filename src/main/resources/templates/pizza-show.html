@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:replace="~{frags :: head}" />
+</head>
+<body class="bg-dark text-white">
+	<header th:replace="~{frags :: header}"></header>
+	
+	<div th:object="${pizza}" class="d-flex align-items-center flex-column mb-5">
+		<h1 class="text-danger mb-4">[[*{name}]]</h1>
+		<div class="pizza-index-img mb-4">
+			<img alt="" th:src="*{imgUrl}" onerror="this.src='/imgs/noimage.png'">
+		</div>
+		<p><span class="text-danger fw-semibold fs-5">Descrizione :</span> [[*{description}]]</p>
+		<p class="mb-3"><span class="text-danger fw-semibold fs-5">Prezzo :</span> [[*{getFormattedPrice()}]]€</p>
+		
+		<div class="mb-5 d-flex">
+			<a th:href="@{/pizzas/update/{id}(id=*{id})}" class="btn btn-secondary me-2" title="Modifica pizza"><i class="fa-solid fa-pen-to-square"></i></a>
+			<form 
+				th:action="@{/pizzas/delete/{id}(id=*{id})}" 
+				method="POST"
+				style="display: inline;"
+			>
+		 	 	<button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+			</form>
+		</div>
+		
+		<a href="/pizzas" class="btn btn-danger">Torna al Menù</a>
+	</div>
+</body>
+</html>
