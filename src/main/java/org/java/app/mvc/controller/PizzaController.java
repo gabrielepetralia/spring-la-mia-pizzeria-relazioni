@@ -173,4 +173,45 @@ public class PizzaController {
 		return "redirect:/pizzas/" + id;
 	}
 	
+	@GetMapping("/special-offer/update/{specialOffer_id}")
+	public String editSpecialOffer(
+			@PathVariable("specialOffer_id") int id,
+			Model model
+		) {
+		
+		SpecialOffer specialOffer = specialOfferService.findById(id);
+		int pizzaId = specialOffer.getPizza().getId();
+		
+		model.addAttribute("specialOffer", specialOffer);
+		model.addAttribute("pizzaId", pizzaId);
+		
+		return "specialOffer-create-edit";
+	}
+	
+	@PostMapping("/special-offer/update/{specialOffer_id}")
+	public String updateSpecialOffer(
+			@Valid @ModelAttribute SpecialOffer specialOffer,
+			BindingResult bindingResult,
+			Model model
+		) {
+		
+		specialOfferService.save(specialOffer);
+		
+		Pizza specialOfferPizza = specialOffer.getPizza();
+		
+		return "redirect:/pizzas/" + specialOfferPizza.getId();
+	}
+	
+	@PostMapping("/special-offer/delete/{specialOffer_id}")
+	public String deleteBorrowing(
+			@PathVariable("specialOffer_id") int id
+		) {
+		
+		SpecialOffer specialOffer = specialOfferService.findById(id);
+		Pizza pizza = specialOffer.getPizza();
+		specialOfferService.delete(specialOffer);
+		
+		return "redirect:/pizzas/" + pizza.getId();
+	}
+	
 }
