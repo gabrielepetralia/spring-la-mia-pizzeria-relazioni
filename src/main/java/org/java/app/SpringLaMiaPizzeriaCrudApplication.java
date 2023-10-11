@@ -1,7 +1,11 @@
 package org.java.app;
 
+import java.time.LocalDate;
+
 import org.java.app.db.pojo.Pizza;
+import org.java.app.db.pojo.SpecialOffer;
 import org.java.app.db.serv.PizzaService;
+import org.java.app.db.serv.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +16,9 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	
 	@Autowired
 	private PizzaService pizzaService;
+	
+	@Autowired
+	private SpecialOfferService specialOfferService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
@@ -31,6 +38,38 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		pizzaService.save(pizza3);
 		pizzaService.save(pizza4);
 		pizzaService.save(pizza5);
+		
+		SpecialOffer specialOffer1 = new SpecialOffer(
+				LocalDate.now(), 
+				LocalDate.now(), 
+				"Offerta 1", 
+				pizza1);
+		SpecialOffer specialOffer2 = new SpecialOffer(
+				LocalDate.now(), 
+				LocalDate.now(), 
+				"Offerta 2", 
+				pizza2);
+		SpecialOffer specialOffer3 = new SpecialOffer(
+				LocalDate.now(), 
+				LocalDate.now(), 
+				"Offerta 3", 
+				pizza3);
+		SpecialOffer specialOffer4 = new SpecialOffer(
+				LocalDate.now(), 
+				LocalDate.now(), 
+				"Offerta 4", 
+				pizza4);
+		SpecialOffer specialOffer5 = new SpecialOffer(
+				LocalDate.now(), 
+				LocalDate.now(), 
+				"Offerta 5",
+				pizza4);
+		
+		specialOfferService.save(specialOffer1);
+		specialOfferService.save(specialOffer2);
+		specialOfferService.save(specialOffer3);
+		specialOfferService.save(specialOffer4);
+		specialOfferService.save(specialOffer5);
 		
 		System.out.println("Insert OK!");
 	}

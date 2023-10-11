@@ -1,5 +1,7 @@
 package org.java.app.db.pojo;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
@@ -7,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,6 +42,9 @@ public class Pizza {
 	@NotNull(message = "Inserire il prezzo")
 	@DecimalMin(value = "0.00", inclusive = false, message="Il prezzo non può essere inferiore o uguale a 0")
 	private double price;
+	
+	@OneToMany(mappedBy = "pizza")
+	private List<SpecialOffer> specialOffers;
 	
 	public Pizza() { }
 	
@@ -91,6 +97,14 @@ public class Pizza {
 	
 	public String getFormattedPrice() {
 		return String.format("%.2f", price);
+	}
+
+	public List<SpecialOffer> getSpecialOffers() {
+		return specialOffers;
+	}
+
+	public void setSpecialOffers(List<SpecialOffer> specialOffers) {
+		this.specialOffers = specialOffers;
 	}
 	
 }

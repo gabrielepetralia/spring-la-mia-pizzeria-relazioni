@@ -3,7 +3,9 @@ package org.java.app.mvc.controller;
 import java.util.List;
 
 import org.java.app.db.pojo.Pizza;
+import org.java.app.db.pojo.SpecialOffer;
 import org.java.app.db.serv.PizzaService;
+import org.java.app.db.serv.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,9 @@ public class PizzaController {
 
 	@Autowired
 	private PizzaService pizzaService;
+	
+	@Autowired
+	private SpecialOfferService specialOfferService;
 	
 	@GetMapping
 	public String getIndex(Model model, @RequestParam(required = false) String name) {
@@ -126,10 +131,46 @@ public class PizzaController {
 	}
 	
 	@PostMapping("/delete/{id}")
-	public String deleteBook(@PathVariable int id) {
+	public String deletePizza(@PathVariable int id) {
 		Pizza pizza = pizzaService.findById(id);
 		pizzaService.delete(pizza);
 		
 		return "redirect:/pizzas";
 	}
+	
+	
+	// SpecialOffer
+	@GetMapping("/special-offer/{pizza_id}")
+	public String createSpecialOffer(
+			@PathVariable("pizza_id") int id,
+			Model model
+			) {
+		
+		Pizza pizza = pizzaService.findById(id);
+		SpecialOffer specialOffer = new SpecialOffer();
+		
+		model.addAttribute("pizza", pizza);		
+		model.addAttribute("specialOffer", specialOffer);
+		model.addAttribute("pizzaId", id);
+		
+		return "specialOffer-create-edit";
+	}
+	
+	@PostMapping("/special-offer/{pizza_id}")
+	public String storeSpecialOffer(
+			@Valid @ModelAttribute SpecialOffer specialOffer,
+			BindingResult bindingResult,			
+			@PathVariable("pizza_id") int id,
+			Model model
+		) {
+		
+		Pizza pizza = pizzaService.findById(id);
+		
+		specialOffer.setPizza(pizza);
+		
+		specialOfferService.save(specialOffer);
+		
+		return "redirect:/pizzas/" + id;
+	}
+	
 }

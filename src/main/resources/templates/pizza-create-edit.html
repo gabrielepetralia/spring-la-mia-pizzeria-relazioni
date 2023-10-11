@@ -9,7 +9,7 @@
 	
 	
 	<div class="d-flex align-items-center flex-column mb-5">
-		<form class="pizza-form text-secondary mb-5 fw-semibold" th:object="${pizza}" method="POST">
+		<form class="my-form text-secondary mb-5 fw-semibold" th:object="${pizza}" method="POST">
 			<h4 th:if="${pizza.id > 0}" class="text-center text-danger py-3">Modifica la pizza</h4>
 			<h4 th:unless="${pizza.id > 0}" class="text-center text-danger py-3">Aggiungi una nuova pizza</h4>
 			  	<div class="mb-3">
