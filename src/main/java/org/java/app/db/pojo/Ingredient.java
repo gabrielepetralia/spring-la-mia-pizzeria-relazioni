@@ -48,7 +48,7 @@ public class Ingredient {
 		this.name = name;
 	}
 	
-	public Boolean hasAllergens() {
+	public Boolean getAllergens() {
 		return allergens;
 	}
 	

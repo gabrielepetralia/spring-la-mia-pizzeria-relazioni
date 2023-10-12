@@ -69,7 +69,7 @@ public class PizzaController {
 			System.out.println("Error:");
 			bindingResult.getAllErrors().forEach(System.out::println);
 			
-			return "pizza-create";
+			return "pizza-create-edit";
 		} else 
 			System.out.println("No error");
 		
@@ -118,12 +118,6 @@ public class PizzaController {
 		try {
 			pizzaService.save(pizza);
 		} catch (Exception e) {
-			
-			// CONSTRAIN VALIDATION (unique)
-			System.out.println("Errore constrain: " + e.getClass().getSimpleName());
-			
-			model.addAttribute("name_unique", "Nome già presente nel menù");
-			
 			return "pizza-create-edit";
 		}
 		
