@@ -2,8 +2,10 @@ package org.java.app;
 
 import java.time.LocalDate;
 
+import org.java.app.db.pojo.Ingredient;
 import org.java.app.db.pojo.Pizza;
 import org.java.app.db.pojo.SpecialOffer;
+import org.java.app.db.serv.IngredientService;
 import org.java.app.db.serv.PizzaService;
 import org.java.app.db.serv.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	
 	@Autowired
 	private SpecialOfferService specialOfferService;
+	
+	@Autowired
+	private IngredientService ingredientService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
@@ -27,11 +32,61 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Pizza pizza1 = new Pizza("Margherita", "pizza con pomodoro e mozzarella", "https://www.unmondodisapori.it/wp-content/uploads/2017/10/margherita.jpg", 5.50);
-		Pizza pizza2 = new Pizza("Tedesca", "pizza con wurstel e patatine", "https://www.scattidigusto.it/wp-content/uploads/2015/11/pizza-wurstel-patatine-pomodoro.jpg", 6.50);
-		Pizza pizza3 = new Pizza("Norma", "pizza con melanzane e ricotta", "https://cdn.cook.stbm.it/thumbnails/ricette/144/144902/hd750x421.jpg", 7.50);
-		Pizza pizza4 = new Pizza("Tonnara", "pizza con tonno e cipolla","https://www.gustissimo.it/articoli/ricette/pizze/pizza-tonno-e-cipolla.jpg", 7.00);
-		Pizza pizza5 = new Pizza("Diavola", "pizza con salame piccante","https://www.saporidellamurgia.com/prodotti/0302628/pizza_calabrese.jpg", 7.00);
+		Ingredient ingredient1 = new Ingredient("Pomodoro", false);
+		Ingredient ingredient2 = new Ingredient("Mozzarella", true);
+		Ingredient ingredient3 = new Ingredient("Patatine", true);
+		Ingredient ingredient4 = new Ingredient("Wurstel", true);
+		Ingredient ingredient5 = new Ingredient("Salame Piccante", true);
+		Ingredient ingredient6 = new Ingredient("Cipolla", false);
+		Ingredient ingredient7 = new Ingredient("Tonno", true);
+		Ingredient ingredient8 = new Ingredient("Ricotta", false);
+		Ingredient ingredient9 = new Ingredient("Melanzane", false);
+		
+		ingredientService.save(ingredient1);
+		ingredientService.save(ingredient2);
+		ingredientService.save(ingredient3);
+		ingredientService.save(ingredient4);
+		ingredientService.save(ingredient5);
+		ingredientService.save(ingredient6);
+		ingredientService.save(ingredient7);
+		ingredientService.save(ingredient8);
+		ingredientService.save(ingredient9);	
+		
+		Pizza pizza1 = new Pizza(
+				"Margherita", 
+				"pizza con pomodoro e mozzarella", 
+				"https://www.unmondodisapori.it/wp-content/uploads/2017/10/margherita.jpg", 
+				5.50,
+				ingredient1,ingredient2
+			);
+		Pizza pizza2 = new Pizza(
+				"Tedesca", 
+				"pizza con wurstel e patatine", 
+				"https://www.scattidigusto.it/wp-content/uploads/2015/11/pizza-wurstel-patatine-pomodoro.jpg", 
+				6.50,
+				ingredient1,ingredient2,ingredient3,ingredient4
+			);
+		Pizza pizza3 = new Pizza(
+				"Norma", 
+				"pizza con melanzane e ricotta", 
+				"https://cdn.cook.stbm.it/thumbnails/ricette/144/144902/hd750x421.jpg", 
+				7.50,
+				ingredient1,ingredient2,ingredient8,ingredient9
+			);
+		Pizza pizza4 = new Pizza(
+				"Tonnara", 
+				"pizza con tonno e cipolla",
+				"https://www.gustissimo.it/articoli/ricette/pizze/pizza-tonno-e-cipolla.jpg", 
+				7.00,
+				ingredient1,ingredient2,ingredient6,ingredient7
+			);
+		Pizza pizza5 = new Pizza(
+				"Diavola", 
+				"pizza con salame piccante",
+				"https://www.saporidellamurgia.com/prodotti/0302628/pizza_calabrese.jpg", 
+				7.00,
+				ingredient1,ingredient2,ingredient5
+			);
 		
 		pizzaService.save(pizza1);
 		pizzaService.save(pizza2);
@@ -69,7 +124,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner{
 		specialOfferService.save(specialOffer2);
 		specialOfferService.save(specialOffer3);
 		specialOfferService.save(specialOffer4);
-		specialOfferService.save(specialOffer5);
+		specialOfferService.save(specialOffer5);	
 		
 		System.out.println("Insert OK!");
 	}
