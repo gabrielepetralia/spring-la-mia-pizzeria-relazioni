@@ -12,7 +12,7 @@
 		<form class="my-form text-secondary mb-5 fw-semibold" th:object="${specialOffer}" method="POST">
 			<h4 th:if="${specialOffer.id > 0}" class="text-center text-danger py-3">Modifica l'Offerta Speciale</h4>
 			<h4 th:unless="${specialOffer.id > 0}" class="text-center text-danger py-3">Aggiungi una nuova Offerta Speciale</h4>
-				<input type="text" name="pizza" th:field="*{pizza.id}" hidden>
+				<input type="text" name="pizza" th:field="*{pizza}" hidden>
 			  	<div class="mb-3">
 				  	<label for="title" class="form-label">Titolo</label>
 			  		<input type="text" class="form-control" id="title" title="title" th:field="*{title}">

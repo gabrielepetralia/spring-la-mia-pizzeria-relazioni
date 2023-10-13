@@ -2,8 +2,10 @@ package org.java.app.mvc.controller;
 
 import java.util.List;
 
+import org.java.app.db.pojo.Ingredient;
 import org.java.app.db.pojo.Pizza;
 import org.java.app.db.pojo.SpecialOffer;
+import org.java.app.db.serv.IngredientService;
 import org.java.app.db.serv.PizzaService;
 import org.java.app.db.serv.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class PizzaController {
 
 	@Autowired
 	private PizzaService pizzaService;
+	
+	@Autowired
+	private IngredientService ingredientService;
 	
 	@Autowired
 	private SpecialOfferService specialOfferService;
@@ -52,8 +57,10 @@ public class PizzaController {
 	
 	@GetMapping("/create")
 	public String getCreateForm(Model model) {
+		List<Ingredient> ingredients = ingredientService.findAll();
 		
 		model.addAttribute("pizza", new Pizza());
+		model.addAttribute("ingredients", ingredients);
 		
 		return "pizza-create-edit";
 	}
@@ -64,6 +71,9 @@ public class PizzaController {
 			BindingResult bindingResult,
 			Model model
 			) {
+		
+		List<Ingredient> ingredients = ingredientService.findAll();
+		model.addAttribute("ingredients", ingredients);
 		
 		if (bindingResult.hasErrors()) {
 			System.out.println("Error:");
@@ -93,9 +103,11 @@ public class PizzaController {
 			@PathVariable int id,
 			Model model
 		) {
-		
+		List<Ingredient> ingredients = ingredientService.findAll();
 		Pizza pizza = pizzaService.findById(id);
+		
 		model.addAttribute("pizza", pizza);
+		model.addAttribute("ingredients", ingredients);
 		
 		return "pizza-create-edit";
 	}
